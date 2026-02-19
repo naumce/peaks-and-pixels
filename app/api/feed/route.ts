@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
                     id, first_name, last_name, avatar_url
                 ),
                 club:clubs!club_posts_club_id_fkey(
-                    id, name, slug, logo_url
+                    id, name, slug, logo
                 )
             `)
             .or(`club_id.in.(${clubIds.join(',')}),is_public.eq.true`)

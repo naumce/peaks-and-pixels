@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Mountain, Mail, Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
 
 const footerLinks = {
@@ -27,6 +30,13 @@ const socialLinks = [
 ];
 
 export function SiteFooter() {
+    const pathname = usePathname();
+
+    // Don't show on admin, auth, or dashboard pages
+    if (pathname.startsWith('/admin') || pathname.startsWith('/auth') || pathname.startsWith('/dashboard')) {
+        return null;
+    }
+
     return (
         <footer className="bg-card border-t border-border">
             <div className="container mx-auto px-4 py-16">

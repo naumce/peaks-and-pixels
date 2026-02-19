@@ -61,7 +61,7 @@ export default async function AccountDashboard() {
                 id,
                 name,
                 slug,
-                logo_url,
+                logo,
                 member_count
             )
         `)
@@ -265,9 +265,9 @@ export default async function AccountDashboard() {
                                             className="flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors"
                                         >
                                             <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
-                                                {club.logo_url ? (
+                                                {club.logo ? (
                                                     <Image
-                                                        src={club.logo_url}
+                                                        src={club.logo}
                                                         alt=""
                                                         width={40}
                                                         height={40}

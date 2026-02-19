@@ -30,7 +30,7 @@ export async function Testimonials() {
         .limit(3);
 
     // Map database reviews to testimonial format
-    const testimonials: Testimonial[] = (reviews || []).map((review) => {
+    const testimonials: Testimonial[] = (reviews || []).map((review: any) => {
         const customer = review.customer as { first_name: string; last_name: string; avatar_url: string | null } | null;
         return {
             id: review.id,

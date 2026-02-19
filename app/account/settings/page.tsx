@@ -69,7 +69,7 @@ export default function SettingsPage() {
                     tour_reminders: userSettings.tour_reminders ?? true,
                     club_updates: userSettings.club_updates ?? true,
                     preferred_language: userSettings.preferred_language ?? 'en',
-                    theme: userSettings.theme ?? 'dark',
+                    theme: (userSettings.theme as 'light' | 'dark' | 'system') ?? 'dark',
                 });
             }
         } catch (error) {
@@ -106,7 +106,7 @@ export default function SettingsPage() {
     async function handlePasswordReset() {
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(user.email, {
-                redirectTo: `${window.location.origin}/auth/reset-password`,
+                redirectTo: `${window.location.origin}/auth/update-password`,
             });
             if (error) throw error;
             toast.success('Email sent', 'Check your inbox for the password reset link.');

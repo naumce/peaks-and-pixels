@@ -251,7 +251,7 @@ export function EditTourPage({ apiBase, backLink, successRedirect, showFeaturedT
                         <Button variant={routeMode === 'meeting' ? 'default' : 'outline'} onClick={() => setRouteMode('meeting')} className="rounded-xl"><MapPin className="h-4 w-4 mr-2" />Meeting Point</Button>
                     </div>
                     <div className="h-[500px] rounded-2xl overflow-hidden border border-border/50">
-                        <RouteMapEditor mode={routeMode} onRouteChange={setRouteData} onMeetingPointChange={setMeetingPoint} existingRoute={routeData?.points} meetingPoint={meetingPoint} selectedPointIndex={selectedPointIndex} onPointSelect={setSelectedPointIndex} />
+                        <RouteMapEditor mode={routeMode} onRouteChange={setRouteData} onMeetingPointChange={setMeetingPoint} existingRoute={routeData?.points} meetingPoint={meetingPoint ?? undefined} selectedPointIndex={selectedPointIndex} onPointSelect={setSelectedPointIndex} />
                     </div>
                     {routeData && routeData.points.length > 0 && (
                         <div className="p-4 rounded-xl bg-secondary/30 border border-border/50">

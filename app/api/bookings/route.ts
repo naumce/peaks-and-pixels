@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate total
-    const tour = instance.tour as { id: string; name: string; base_price: number } | null;
+    const tour = (instance as any).tour as { id: string; name: string; base_price: number } | null;
     const pricePerPerson = instance.price_override || tour?.base_price || 0;
     const totalAmount = pricePerPerson * participant_count;
 

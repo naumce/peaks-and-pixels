@@ -28,7 +28,7 @@ export async function GET(
         .from('club_events')
         .select(`
             *,
-            organizer:users!club_events_organizer_id_fkey(
+            creator:users!club_events_created_by_fkey(
                 id, first_name, last_name, avatar_url
             )
         `)
@@ -44,7 +44,7 @@ export async function GET(
     let isRegistered = false;
     if (user) {
         const { data: registration } = await supabase
-            .from('club_event_registrations')
+            .from('club_event_rsvps')
             .select('id')
             .eq('event_id', eventId)
             .eq('user_id', user.id)
@@ -99,7 +99,7 @@ export async function PATCH(
     try {
         const body = await request.json();
         const {
-            title, description, event_date, start_time, end_time,
+            title, description, start_datetime, end_datetime,
             location, max_participants, is_paid, price, cover_image
         } = body;
 
@@ -108,9 +108,8 @@ export async function PATCH(
             .update({
                 title,
                 description,
-                event_date,
-                start_time,
-                end_time,
+                start_datetime,
+                end_datetime,
                 location,
                 max_participants,
                 is_paid,

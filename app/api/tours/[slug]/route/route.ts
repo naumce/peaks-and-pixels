@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 
 interface RouteParams {
     params: Promise<{ slug: string }>;
@@ -8,13 +8,14 @@ interface RouteParams {
 // GET /api/tours/[slug]/route - Get route data for a tour
 export async function GET(request: NextRequest, { params }: RouteParams) {
     const { slug } = await params;
-    const supabase = createAdminClient();
+    const supabase = await createClient();
 
     // Get the tour with route data
     const { data: tour, error: tourError } = await supabase
         .from('tours')
         .select('id, route_data, distance_km, meeting_point_lat, meeting_point_lng')
         .eq('slug', slug)
+        .eq('status', 'active')
         .single();
 
     if (tourError || !tour) {

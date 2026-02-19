@@ -53,7 +53,7 @@ export default function TermsPage() {
                         Payment must be completed to confirm your reservation.
                     </p>
 
-                    <h2>4. Cancellation Policy</h2>
+                    <h2 id="cancellation">4. Cancellation Policy</h2>
                     <ul>
                         <li><strong>14+ days before:</strong> Full refund</li>
                         <li><strong>7-14 days before:</strong> 50% refund</li>

@@ -33,8 +33,8 @@ export function SiteHeader() {
         window.location.href = '/';
     }
 
-    // Don't show on admin or auth pages
-    if (pathname.startsWith('/admin') || pathname.startsWith('/auth')) {
+    // Don't show on admin, auth, or dashboard pages
+    if (pathname.startsWith('/admin') || pathname.startsWith('/auth') || pathname.startsWith('/dashboard')) {
         return null;
     }
 

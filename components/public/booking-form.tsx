@@ -376,9 +376,9 @@ export function BookingForm({ tour, availableDates }: BookingFormProps) {
 
                     <p className="text-xs text-center text-muted-foreground">
                         By completing this booking you agree to our{' '}
-                        <a href="/policies/terms" className="text-primary hover:underline">Terms of Service</a>
+                        <a href="/terms" className="text-primary hover:underline">Terms of Service</a>
                         {' '}and{' '}
-                        <a href="/policies/cancellation" className="text-primary hover:underline">Cancellation Policy</a>.
+                        <a href="/terms#cancellation" className="text-primary hover:underline">Cancellation Policy</a>.
                     </p>
                 </div>
             )}

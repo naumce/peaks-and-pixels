@@ -43,13 +43,14 @@ export async function POST(request: NextRequest) {
             console.error('Waypoints delete error:', deleteError);
         }
 
-        const waypointRecords = waypoints.map((wp: { position: { lat: number; lng: number }; type: string; title: string; description?: string; images?: string[] }, index: number) => ({
+        const waypointRecords = waypoints.map((wp: { position: [number, number]; type: string; title: string; description?: string; images?: string[]; photo_url?: string }, index: number) => ({
             tour_id: tourId,
-            position: wp.position,
-            waypoint_type: wp.type,
+            lat: wp.position[1],
+            lng: wp.position[0],
+            type: wp.type,
             title: wp.title,
             description: wp.description || null,
-            photo_url: wp.images?.[0] || null,
+            images: wp.images || (wp.photo_url ? [wp.photo_url] : []),
             order_index: index,
         }));
 

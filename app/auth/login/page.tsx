@@ -48,8 +48,10 @@ export default function LoginPage() {
         // Small delay to ensure cookies are properly set
         await new Promise(resolve => setTimeout(resolve, 100));
 
-        if (role === 'admin' || role === 'guide') {
+        if (role === 'admin') {
             router.push('/admin');
+        } else if (role === 'guide' || role === 'operator') {
+            router.push('/dashboard');
         } else {
             router.push('/account');
         }

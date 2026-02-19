@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { SignOutButton } from '@/components/shared/sign-out-button';
 import {
     LayoutDashboard,
     Mountain,
     Calendar,
     DollarSign,
     UserCircle,
-    LogOut,
     ChevronRight,
 } from 'lucide-react';
 
@@ -77,13 +77,7 @@ export function DashboardSidebar() {
 
             {/* Footer */}
             <div className="border-t border-border/50 p-6">
-                <Link
-                    href="/api/auth/signout"
-                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-apple"
-                >
-                    <LogOut className="h-5 w-5" />
-                    <span>Sign Out</span>
-                </Link>
+                <SignOutButton />
             </div>
         </aside>
     );

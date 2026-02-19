@@ -16,9 +16,8 @@ interface ClubEvent {
     id: string;
     title: string;
     description: string;
-    event_date: string;
-    start_time: string;
-    end_time: string;
+    start_datetime: string;
+    end_datetime: string;
     location: string;
     max_participants: number;
     current_participants: number;
@@ -38,7 +37,7 @@ interface Club {
     id: string;
     name: string;
     slug: string;
-    logo_url: string;
+    logo: string;
 }
 
 export default function ClubEventDetailPage({
@@ -135,7 +134,7 @@ export default function ClubEventDetailPage({
         ? event.max_participants - (event.current_participants || 0)
         : null;
     const isFull = spotsLeft !== null && spotsLeft <= 0;
-    const eventDate = new Date(event.event_date);
+    const eventDate = new Date(event.start_datetime);
     const isPast = eventDate < new Date();
 
     return (
@@ -151,9 +150,9 @@ export default function ClubEventDetailPage({
                             <ArrowLeft className="h-5 w-5" />
                         </Link>
                         <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
-                            {club.logo_url ? (
+                            {club.logo ? (
                                 <Image
-                                    src={club.logo_url}
+                                    src={club.logo}
                                     alt=""
                                     width={40}
                                     height={40}
@@ -230,22 +229,20 @@ export default function ClubEventDetailPage({
                                 </div>
                             </div>
 
-                            {event.start_time && (
-                                <div className="bg-card rounded-xl p-4 border border-border/50">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-3 bg-primary/10 rounded-lg">
-                                            <Clock className="h-5 w-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-muted-foreground">Time</p>
-                                            <p className="font-medium">
-                                                {event.start_time}
-                                                {event.end_time && ` - ${event.end_time}`}
-                                            </p>
-                                        </div>
+                            <div className="bg-card rounded-xl p-4 border border-border/50">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-3 bg-primary/10 rounded-lg">
+                                        <Clock className="h-5 w-5 text-primary" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-muted-foreground">Time</p>
+                                        <p className="font-medium">
+                                            {format(new Date(event.start_datetime), 'h:mm a')}
+                                            {event.end_datetime && ` - ${format(new Date(event.end_datetime), 'h:mm a')}`}
+                                        </p>
                                     </div>
                                 </div>
-                            )}
+                            </div>
 
                             {event.location && (
                                 <div className="bg-card rounded-xl p-4 border border-border/50">

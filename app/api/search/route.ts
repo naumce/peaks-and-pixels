@@ -22,8 +22,8 @@ export async function GET(request: NextRequest) {
         const { data: tourResults } = await supabase
             .from('tours')
             .select(`
-                id, name, slug, tagline, cover_image, 
-                location_area, difficulty, duration_hours, base_price
+                id, name, slug, tagline, cover_image,
+                location_area, difficulty, duration_minutes, base_price
             `)
             .eq('status', 'active')
             .or(`name.ilike.${searchTerm},tagline.ilike.${searchTerm},location_area.ilike.${searchTerm}`)
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         const { data: clubResults } = await supabase
             .from('clubs')
             .select(`
-                id, name, slug, description, logo_url,
+                id, name, slug, description, logo,
                 activity_types, member_count
             `)
             .eq('status', 'active')

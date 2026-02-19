@@ -18,6 +18,7 @@ const placeholderTours = [
         base_price: 89,
         status: 'active',
         is_featured: true,
+        cover_image: null as string | null,
     },
     {
         id: '2',
@@ -30,6 +31,7 @@ const placeholderTours = [
         base_price: 299,
         status: 'active',
         is_featured: false,
+        cover_image: null as string | null,
     },
 ];
 

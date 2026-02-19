@@ -17,8 +17,8 @@ const footerLinks = {
     support: [
         { name: 'Contact', href: '/contact' },
         { name: 'FAQ', href: '/faq' },
-        { name: 'Booking Policy', href: '/policies/booking' },
-        { name: 'Cancellation', href: '/policies/cancellation' },
+        { name: 'Terms of Service', href: '/terms' },
+        { name: 'Cancellation', href: '/terms#cancellation' },
     ],
 };
 

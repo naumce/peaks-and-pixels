@@ -65,9 +65,23 @@ export default function ManageMembersPage({ params }: { params: Promise<{ slug: 
     }
 
     async function handleMemberAction(memberId: string, action: 'promote' | 'demote' | 'remove' | 'approve' | 'reject') {
-        // TODO: Implement member management API
-        console.log('Action:', action, 'Member:', memberId);
-        fetchMembers();
+        try {
+            const res = await fetch(`/api/clubs/${slug}/members/${memberId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                console.error('Member action failed:', data.error);
+                return;
+            }
+
+            fetchMembers();
+        } catch (error) {
+            console.error('Error performing member action:', error);
+        }
     }
 
     const roleIcon = {

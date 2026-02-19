@@ -28,7 +28,7 @@ export async function POST(
     // Get event and check availability
     const { data: event } = await supabase
         .from('club_events')
-        .select('id, max_participants, current_participants, event_date')
+        .select('id, max_participants, current_participants, start_datetime')
         .eq('id', eventId)
         .eq('club_id', club.id)
         .single();
@@ -38,7 +38,7 @@ export async function POST(
     }
 
     // Check if event is in the past
-    if (new Date(event.event_date) < new Date()) {
+    if (new Date(event.start_datetime) < new Date()) {
         return NextResponse.json({ error: 'Event has already passed' }, { status: 400 });
     }
 
@@ -49,7 +49,7 @@ export async function POST(
 
     // Check if already registered
     const { data: existing } = await supabase
-        .from('club_event_registrations')
+        .from('club_event_rsvps')
         .select('id')
         .eq('event_id', eventId)
         .eq('user_id', user.id)
@@ -61,11 +61,11 @@ export async function POST(
 
     // Register user
     const { error: regError } = await supabase
-        .from('club_event_registrations')
+        .from('club_event_rsvps')
         .insert({
             event_id: eventId,
             user_id: user.id,
-            status: 'confirmed',
+            status: 'going',
         });
 
     if (regError) {
@@ -125,7 +125,7 @@ export async function DELETE(
 
     // Delete registration
     const { error } = await supabase
-        .from('club_event_registrations')
+        .from('club_event_rsvps')
         .delete()
         .eq('event_id', eventId)
         .eq('user_id', user.id);

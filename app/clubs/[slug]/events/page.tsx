@@ -15,9 +15,8 @@ interface ClubEvent {
     id: string;
     title: string;
     description: string;
-    event_date: string;
-    start_time: string;
-    end_time: string;
+    start_datetime: string;
+    end_datetime: string;
     location: string;
     max_participants: number;
     current_participants: number;
@@ -30,7 +29,7 @@ interface Club {
     id: string;
     name: string;
     slug: string;
-    logo_url: string;
+    logo: string;
 }
 
 export default function ClubEventsPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -59,7 +58,7 @@ export default function ClubEventsPage({ params }: { params: Promise<{ slug: str
 
     async function fetchEvents() {
         try {
-            const res = await fetch(`/api/clubs/${slug}/events?filter=${filter}`);
+            const res = await fetch(`/api/clubs/${slug}/events?status=${filter}`);
             if (res.ok) {
                 const data = await res.json();
                 setEvents(data.events || []);
@@ -100,9 +99,9 @@ export default function ClubEventsPage({ params }: { params: Promise<{ slug: str
                             <ArrowLeft className="h-5 w-5" />
                         </Link>
                         <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden">
-                            {club.logo_url ? (
+                            {club.logo ? (
                                 <Image
-                                    src={club.logo_url}
+                                    src={club.logo}
                                     alt=""
                                     width={48}
                                     height={48}
@@ -197,18 +196,16 @@ export default function ClubEventsPage({ params }: { params: Promise<{ slug: str
                                         <div className="flex items-center gap-2">
                                             <Calendar className="h-4 w-4 shrink-0" />
                                             <span>
-                                                {format(new Date(event.event_date), 'EEE, MMM d, yyyy')}
+                                                {format(new Date(event.start_datetime), 'EEE, MMM d, yyyy')}
                                             </span>
                                         </div>
-                                        {event.start_time && (
-                                            <div className="flex items-center gap-2">
-                                                <Clock className="h-4 w-4 shrink-0" />
-                                                <span>
-                                                    {event.start_time}
-                                                    {event.end_time && ` - ${event.end_time}`}
-                                                </span>
-                                            </div>
-                                        )}
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="h-4 w-4 shrink-0" />
+                                            <span>
+                                                {format(new Date(event.start_datetime), 'h:mm a')}
+                                                {event.end_datetime && ` - ${format(new Date(event.end_datetime), 'h:mm a')}`}
+                                            </span>
+                                        </div>
                                         {event.location && (
                                             <div className="flex items-center gap-2">
                                                 <MapPin className="h-4 w-4 shrink-0" />

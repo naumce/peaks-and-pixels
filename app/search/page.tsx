@@ -16,7 +16,7 @@ interface Tour {
     cover_image: string;
     location_area: string;
     difficulty: string;
-    duration_hours: number;
+    duration_minutes: number;
     base_price: number;
 }
 
@@ -25,7 +25,7 @@ interface Club {
     name: string;
     slug: string;
     description: string;
-    logo_url: string;
+    logo: string;
     activity_types: string[];
     member_count: number;
 }
@@ -182,7 +182,7 @@ function SearchContent() {
                                                         </span>
                                                         <span className="flex items-center gap-1">
                                                             <Clock className="h-4 w-4" />
-                                                            {tour.duration_hours}h
+                                                            {Math.round(tour.duration_minutes / 60)}h
                                                         </span>
                                                     </div>
                                                     <p className="font-bold">
@@ -209,8 +209,8 @@ function SearchContent() {
                                         >
                                             <div className="flex items-center gap-4 mb-3">
                                                 <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden">
-                                                    {club.logo_url ? (
-                                                        <img src={club.logo_url} alt="" className="w-full h-full object-cover" />
+                                                    {club.logo ? (
+                                                        <img src={club.logo} alt="" className="w-full h-full object-cover" />
                                                     ) : (
                                                         <Users className="h-6 w-6 text-muted-foreground" />
                                                     )}

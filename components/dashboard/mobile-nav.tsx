@@ -18,9 +18,9 @@ import {
     Calendar,
     DollarSign,
     UserCircle,
-    LogOut,
     ChevronRight,
 } from 'lucide-react';
+import { SignOutButton } from '@/components/shared/sign-out-button';
 import { useState } from 'react';
 
 const navigation = [
@@ -96,13 +96,7 @@ export function DashboardMobileNav() {
 
                 {/* Footer */}
                 <div className="border-t border-border/50 p-6 bg-secondary/20">
-                    <Link
-                        href="/api/auth/signout"
-                        className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-apple"
-                    >
-                        <LogOut className="h-5 w-5" />
-                        <span>Sign Out</span>
-                    </Link>
+                    <SignOutButton />
                 </div>
             </SheetContent>
         </Sheet>

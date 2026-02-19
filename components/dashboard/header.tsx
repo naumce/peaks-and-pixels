@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { DashboardMobileNav } from '@/components/dashboard/mobile-nav';
+import { SignOutButton } from '@/components/shared/sign-out-button';
 import type { DbUser } from '@/types/database';
 
 interface DashboardHeaderProps {
@@ -112,8 +113,8 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                             </DropdownMenuItem>
                         </div>
                         <DropdownMenuSeparator className="bg-border/50" />
-                        <DropdownMenuItem className="text-destructive focus:bg-destructive/10 focus:text-destructive rounded-lg cursor-pointer">
-                            Sign out
+                        <DropdownMenuItem asChild className="p-0">
+                            <SignOutButton variant="dropdown" />
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

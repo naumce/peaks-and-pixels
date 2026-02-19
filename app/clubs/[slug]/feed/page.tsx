@@ -36,7 +36,7 @@ interface Club {
     slug: string;
     description: string;
     cover_image: string;
-    logo_url: string;
+    logo: string;
     member_count: number;
 }
 
@@ -61,7 +61,7 @@ export default function ClubFeedPage({ params }: { params: Promise<{ slug: strin
             if (res.ok) {
                 const data = await res.json();
                 setClub(data.club);
-                setIsMember(data.isMember);
+                setIsMember(data.membership?.status === 'active');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -134,9 +134,9 @@ export default function ClubFeedPage({ params }: { params: Promise<{ slug: strin
                             <ArrowLeft className="h-5 w-5" />
                         </Link>
                         <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center overflow-hidden">
-                            {club.logo_url ? (
+                            {club.logo ? (
                                 <Image
-                                    src={club.logo_url}
+                                    src={club.logo}
                                     alt=""
                                     width={48}
                                     height={48}

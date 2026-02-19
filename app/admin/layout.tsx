@@ -22,6 +22,11 @@ export default async function AdminLayout({
         .eq('id', user.id)
         .single();
 
+    // Enforce admin role - non-admins cannot access admin area
+    if (profile?.role !== 'admin') {
+        redirect('/account');
+    }
+
     return (
         <div className="min-h-screen bg-background">
             {/* Background gradient effect */}

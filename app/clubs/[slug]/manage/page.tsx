@@ -152,21 +152,22 @@ export default function ClubManagePage({ params }: { params: Promise<{ slug: str
                         </p>
                     </Link>
 
-                    <Link
-                        href={`/clubs/${slug}/manage/posts/new`}
-                        className="bg-card rounded-xl p-6 border border-border/50 hover:border-primary/50 transition-colors group"
+                    <div
+                        className="bg-card rounded-xl p-6 border border-border/50 opacity-60 cursor-not-allowed"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="p-3 bg-purple-500/10 rounded-lg">
                                 <MessageSquare className="h-6 w-6 text-purple-500" />
                             </div>
-                            <Plus className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                            <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-1 rounded-full">
+                                Coming Soon
+                            </span>
                         </div>
                         <h3 className="font-semibold mb-1">New Post</h3>
                         <p className="text-sm text-muted-foreground">
                             Share news or updates with your club
                         </p>
-                    </Link>
+                    </div>
 
                     <Link
                         href={`/clubs/${slug}/manage/settings`}
@@ -239,9 +240,8 @@ export default function ClubManagePage({ params }: { params: Promise<{ slug: str
                             <span className="text-muted-foreground">{club.post_count}</span>
                         </Link>
 
-                        <Link
-                            href={`/clubs/${slug}/manage/analytics`}
-                            className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
+                        <div
+                            className="flex items-center justify-between p-4 opacity-60 cursor-not-allowed"
                         >
                             <div className="flex items-center gap-3">
                                 <BarChart3 className="h-5 w-5 text-muted-foreground" />
@@ -252,7 +252,10 @@ export default function ClubManagePage({ params }: { params: Promise<{ slug: str
                                     </p>
                                 </div>
                             </div>
-                        </Link>
+                            <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-1 rounded-full">
+                                Coming Soon
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

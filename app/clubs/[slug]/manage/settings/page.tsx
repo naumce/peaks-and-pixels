@@ -33,7 +33,7 @@ interface Club {
     is_private: boolean;
     require_approval: boolean;
     cover_image: string;
-    logo_url: string;
+    logo: string;
 }
 
 export default function ClubSettingsPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -54,7 +54,10 @@ export default function ClubSettingsPage({ params }: { params: Promise<{ slug: s
             const res = await fetch(`/api/clubs/${slug}`);
             if (res.ok) {
                 const data = await res.json();
-                setClub(data.club);
+                setClub({
+                    ...data.club,
+                    is_private: !data.club.is_public,
+                });
             }
         } catch (error) {
             console.error('Error:', error);
@@ -81,7 +84,7 @@ export default function ClubSettingsPage({ params }: { params: Promise<{ slug: s
                     description: club.description,
                     activity_types: club.activity_types || [],
                     location: club.location,
-                    is_private: club.is_private,
+                    is_public: !club.is_private,
                     require_approval: club.require_approval,
                 }),
             });

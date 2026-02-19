@@ -12,7 +12,7 @@ export async function GET(
     // Get club
     const { data: club, error: clubError } = await supabase
         .from('clubs')
-        .select('id')
+        .select('id, owner_id')
         .eq('slug', slug)
         .single();
 
@@ -20,17 +20,38 @@ export async function GET(
         return NextResponse.json({ error: 'Club not found' }, { status: 404 });
     }
 
-    // Get members
-    const { data: members, error } = await supabase
+    // Check if requesting user is an admin/owner (to include pending members)
+    const { data: { user } } = await supabase.auth.getUser();
+    let isAdmin = false;
+    if (user) {
+        const { data: membership } = await supabase
+            .from('club_members')
+            .select('role')
+            .eq('club_id', club.id)
+            .eq('user_id', user.id)
+            .single();
+
+        isAdmin = club.owner_id === user.id ||
+            membership?.role === 'owner' ||
+            membership?.role === 'admin';
+    }
+
+    // Build query - admins see all members including pending, others see only active
+    let query = supabase
         .from('club_members')
         .select(`
             *,
-            user:users(id, first_name, last_name, avatar_url)
+            user:users(id, first_name, last_name, email, avatar_url)
         `)
         .eq('club_id', club.id)
-        .eq('status', 'active')
         .order('role', { ascending: true })
         .order('joined_at', { ascending: true });
+
+    if (!isAdmin) {
+        query = query.eq('status', 'active');
+    }
+
+    const { data: members, error } = await query;
 
     if (error) {
         console.error('Error fetching members:', error);

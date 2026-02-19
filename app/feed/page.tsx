@@ -31,7 +31,7 @@ interface Post {
         id: string;
         name: string;
         slug: string;
-        logo_url: string;
+        logo: string;
     };
 }
 
@@ -39,7 +39,7 @@ interface MyClub {
     id: string;
     name: string;
     slug: string;
-    logo_url: string;
+    logo: string;
     member_count: number;
 }
 
@@ -178,9 +178,9 @@ export default function FeedPage() {
                                                 className="flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors"
                                             >
                                                 <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
-                                                    {club.logo_url ? (
+                                                    {club.logo ? (
                                                         <Image
-                                                            src={club.logo_url}
+                                                            src={club.logo}
                                                             alt=""
                                                             width={40}
                                                             height={40}
@@ -230,9 +230,9 @@ export default function FeedPage() {
                                         <div className="p-4 flex items-start gap-4">
                                             <Link href={`/clubs/${post.club.slug}`}>
                                                 <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
-                                                    {post.club.logo_url ? (
+                                                    {post.club.logo ? (
                                                         <Image
-                                                            src={post.club.logo_url}
+                                                            src={post.club.logo}
                                                             alt=""
                                                             width={48}
                                                             height={48}

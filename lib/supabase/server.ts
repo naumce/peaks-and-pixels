@@ -38,9 +38,9 @@ export async function createClient() {
  * Only use in trusted server-side code
  */
 export function createAdminClient() {
-    const { createClient } = require('@supabase/supabase-js');
+    const { createClient: createSupabaseClient } = require('@supabase/supabase-js') as typeof import('@supabase/supabase-js');
 
-    return createClient(
+    return createSupabaseClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_ROLE_KEY!,
         {

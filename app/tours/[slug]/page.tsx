@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TourRouteSection } from '@/components/public/tour-route-section';
@@ -26,13 +26,13 @@ function getDifficultyColor(difficulty: string) {
 
 export default async function TourDetailPage({ params }: TourDetailPageProps) {
     const { slug } = await params;
-    // Use admin client so we can preview draft tours
-    const supabase = createAdminClient();
+    const supabase = await createClient();
 
     const { data: dbTour } = await supabase
         .from('tours')
         .select('*')
         .eq('slug', slug)
+        .eq('status', 'active')
         .single();
 
     if (!dbTour) {
@@ -53,15 +53,15 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
         .order('created_at', { ascending: false })
         .limit(5);
 
-    const tourReviews = reviews || [];
+    const tourReviews = (reviews || []) as Array<{ id: string; rating: number; content: string; created_at: string; customer: { first_name: string; last_name: string; avatar_url: string | null } | null }>;
     const avgRating = tourReviews.length > 0
-        ? (tourReviews.reduce((sum, r) => sum + r.rating, 0) / tourReviews.length).toFixed(1)
+        ? (tourReviews.reduce((sum: number, r: { rating: number }) => sum + r.rating, 0) / tourReviews.length).toFixed(1)
         : null;
 
     // Parse included/not_included arrays
     const included = Array.isArray(tour.whats_included) ? tour.whats_included : [];
     const notIncluded = Array.isArray(tour.whats_not_included) ? tour.whats_not_included : [];
-    const itinerary = Array.isArray(tour.itinerary) ? tour.itinerary : [];
+    const itinerary = (Array.isArray(tour.itinerary) ? tour.itinerary : []) as Array<{ time: string; title: string; description: string }>;
 
     return (
         <>
@@ -160,7 +160,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                             </div>
 
                             {/* Route Section - Interactive Map */}
-                            {tour.route_data && (
+                            {!!tour.route_data && (
                                 <TourRouteSection tourId={tour.id} tourSlug={tour.slug} />
                             )}
 
